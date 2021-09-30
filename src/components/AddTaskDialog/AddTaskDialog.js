@@ -27,7 +27,7 @@ class AddTaskDialog extends React.Component {
             <br />
             <input
               id="new-task-title"
-              value={this.state.currentTask.title}
+              value={this.state.currentTask.title ?? ""}
               onChange={(e) =>
                 this.setState((state) => ({
                   currentTask: new Task(
@@ -44,7 +44,7 @@ class AddTaskDialog extends React.Component {
             <br />
             <input
               id="new-task-desc"
-              value={this.state.currentTask.desc}
+              value={this.state.currentTask.desc ?? ""}
               onChange={(e) =>
                 this.setState((state) => ({
                   currentTask: new Task(

@@ -15,6 +15,10 @@
   cursor: pointer;
 }
 
+.task-list-item-completed {
+  text-decoration: line-through;
+}
+
 #task-title {
   font-size: 2em;
 }
@@ -26,6 +30,13 @@
 .task-actions {
   display: grid;
   grid-template-columns: auto auto;
+  justify-content: space-around;
+  align-content: center;
+}
+
+.task-actions-collapsed {
+  display: none;
+  grid-template-columns: auto;
   justify-content: space-around;
   align-content: center;
 }
@@ -44,4 +55,13 @@
 #check-task-action {
   width: 2em;
   margin: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .task-actions {
+    display: none;
+  }
+  .task-actions-collapsed {
+    display: grid;
+  }
 }

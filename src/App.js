@@ -12,7 +12,7 @@ class App extends React.Component {
       // This is here to control when to show the dialog to add or edit a task
       addEditTask: false,
       // This is used to load tasks
-      tasksCount: localStorage.length,
+      tasks: this.loadTasks(),
       // This object is for tracking the currently editing task (title and description are null if the user wants to make a new task)
       taskToEdit: new Task(),
     };
@@ -35,29 +35,49 @@ class App extends React.Component {
 
     localStorage.setItem(task.key, JSON.stringify(task));
 
-    this.setState((state, _) => ({ tasksCount: state.tasksCount + 1 }));
+    this.setState({ tasks: this.loadTasks() });
   };
 
   // Function to load tasks
-  loadTasks(tasksCount) {
+  loadTasks() {
     let tasksList = [];
-    for (let k = 0; k < tasksCount; k++) {
-      const theTask = JSON.parse(localStorage.getItem(k));
-      if (theTask !== null) {
-        tasksList.push(
-          <TaskListItem
-            taskTitle={theTask.title}
-            taskDesc={theTask.desc}
-            key={theTask.key}
-            onClick={() =>
-              this.setState({ addEditTask: true, taskToEdit: theTask })
-            }
-          />
-        );
+    let completedTasksList = [];
+    const tasksCount = localStorage.getItem("key");
+    if (tasksCount !== null) {
+      for (let k = 0; k < tasksCount; k++) {
+        const theTask = JSON.parse(localStorage.getItem(k));
+        if (theTask !== null) {
+          const theTaskListItem = (
+            <TaskListItem
+              task={theTask}
+              key={theTask.key}
+              onClick={() =>
+                this.setState({ addEditTask: true, taskToEdit: theTask })
+              }
+              onCheck={(isTaskCompleted, task) => {
+                if (isTaskCompleted) {
+                  task.completed = false;
+                } else {
+                  task.completed = true;
+                }
+                this.saveTask(task);
+              }}
+              onDelete={(task) => {
+                localStorage.removeItem(task.key);
+                this.setState({ tasks: this.loadTasks() });
+              }}
+            />
+          );
+          if (theTask.completed) {
+            completedTasksList.push(theTaskListItem);
+          } else {
+            tasksList.push(theTaskListItem);
+          }
+        }
       }
     }
 
-    return tasksList;
+    return tasksList.concat(completedTasksList);
   }
 
   render() {
@@ -74,11 +94,11 @@ class App extends React.Component {
           />
         )}
         <nav>Leaf</nav>
-        <ul id="tasks-list">{this.loadTasks(this.state.tasksCount)}</ul>
+        <ul id="tasks-list">{this.state.tasks}</ul>
         <button
           className="add-task-btn"
           onClick={() => {
-            this.setState({ addEditTask: true });
+            this.setState({ addEditTask: true, taskToEdit: new Task() });
           }}
         >
           +
