@@ -29,6 +29,13 @@ nav {
   font-size: 2em;
 }
 
+
+#tasks-list {
+  list-style-type: none;
+  padding: 1em;
+  margin: 0;
+}
+
 .add-task-btn {
   background-color: var(--leaf);
   border: none;
