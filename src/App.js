@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import AddTaskDialog from "./components/AddTaskDialog/AddTaskDialog";
+import ConfirmDialog from "./components/ConfirmDialog/ConfirmDialog";
 import TaskListItem from "./components/TaskListItem/TaskListItem";
 import Task from "./Task";
 
@@ -15,6 +16,8 @@ class App extends React.Component {
       tasks: this.loadTasks(),
       // This object is for tracking the currently editing task (title and description are null if the user wants to make a new task)
       taskToEdit: new Task(),
+      // This is used to control when to show the dialog to confirm deleting a task
+      deleteTask: false,
     };
   }
 
@@ -63,8 +66,9 @@ class App extends React.Component {
                 this.saveTask(task);
               }}
               onDelete={(task) => {
-                localStorage.removeItem(task.key);
-                this.setState({ tasks: this.loadTasks() });
+                // localStorage.removeItem(task.key);
+                // this.setState({ tasks: this.loadTasks() });
+                this.setState({ deleteTask: true, taskToEdit: task });
               }}
             />
           );
@@ -83,16 +87,33 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
+      
+        {/* Adding/Editing task dialog */}
         {this.state.addEditTask && (
           <AddTaskDialog
             onClose={() => this.setState({ addEditTask: false })}
             task={this.state.taskToEdit}
             onSubmit={(task) => {
-              this.saveTask(task);
+              if (task.title !== null) {
+                this.saveTask(task);
+              }
               this.setState({ addEditTask: false });
             }}
           />
         )}
+
+        {/* Deleting task dialog */}
+        {this.state.deleteTask && (
+          <ConfirmDialog
+            question={`Delete ${this.state.taskToEdit.title}?`}
+            onNo={() => this.setState({ deleteTask: false })}
+            onYes={() => {
+              localStorage.removeItem(this.state.taskToEdit.key);
+              this.setState({ deleteTask: false, tasks: this.loadTasks() });
+            }}
+          />
+        )}
+
         <nav>Leaf</nav>
         <ul id="tasks-list">{this.state.tasks}</ul>
         <button

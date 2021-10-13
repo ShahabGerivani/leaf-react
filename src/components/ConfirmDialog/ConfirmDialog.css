@@ -1,0 +1,16 @@
+.question {
+  display: block;
+  font-size: 2em;
+  margin: auto;
+  padding: 0 1em;
+}
+
+.two-btn-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto auto;
+}
+
+.add-task-btn {
+  width: 90%;
+}

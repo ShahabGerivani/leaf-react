@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
+.dialog-background {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: minmax(auto, 600px);
+  grid-template-rows: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+}
+
+.dialog {
+  background-color: white;
+  padding: 1em;
+  border-radius: 0.5em;
+  opacity: 100%;
+}
