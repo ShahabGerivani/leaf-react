@@ -6,10 +6,10 @@ function ConfirmDialog(props) {
     <Dialog onClose={props.onNo}>
       <span className="question">{props.question}</span>
       <div className="two-btn-container">
-        <button className="add-task-btn" onClick={props.onYes}>
+        <button className="add-task-btn confirm-dialog-btn" onClick={props.onYes}>
           Yes
         </button>
-        <button className="add-task-btn" onClick={props.onNo}>
+        <button className="add-task-btn confirm-dialog-btn" onClick={props.onNo}>
           No
         </button>
       </div>

@@ -1,3 +1,5 @@
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import "./App.css";
 import AddTaskDialog from "./components/AddTaskDialog/AddTaskDialog";
@@ -87,7 +89,6 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-      
         {/* Adding/Editing task dialog */}
         {this.state.addEditTask && (
           <AddTaskDialog
@@ -114,9 +115,20 @@ class App extends React.Component {
           />
         )}
 
-        <nav>Leaf</nav>
+        <nav>
+          <span>Leaf</span>
+          <span className="nav-btn-container">
+            <FontAwesomeIcon
+              className="nav-btn settings-nav-btn"
+              icon={faCog}
+            />
+          </span>
+        </nav>
+
         <ul id="tasks-list">{this.state.tasks}</ul>
+        
         <button
+          id="add-task-btn"
           className="add-task-btn"
           onClick={() => {
             this.setState({ addEditTask: true, taskToEdit: new Task() });

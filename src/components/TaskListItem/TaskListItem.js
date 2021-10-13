@@ -1,25 +1,24 @@
-import { faEllipsisV, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
 import "./TaskListItem.css";
 
 // Compontent for showing tasks as a list in app
 function TaskListItem(props) {
+  // ! Removed
   // Variable to control when to show the actions (if they are collapsed)
-  const [showActions, setShowActions] = useState(false);
+  // const [showActions, setShowActions] = useState(false);
 
-  useEffect(() => {
-    document.addEventListener("mousedown", (e) => {
-      // console.log(e.target.parentNode.parentNode.className);
-      if (e.target.parentNode.className !== "actions-box") {
-        setShowActions(false);
-      }
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", (e) => {
+  //     if (e.target.parentNode.className !== "actions-box") {
+  //       setShowActions(false);
+  //     }
 
-      return () => {
-        document.removeEventListener("mousedown");
-      };
-    });
-  });
+  //     return () => {
+  //       document.removeEventListener("mousedown");
+  //     };
+  //   });
+  // });
 
   return (
     <li

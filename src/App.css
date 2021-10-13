@@ -3,6 +3,7 @@
   --leaf-light: #39e675;
   --leaf-very-light: #57eb8a;
   --bg: #eeeeee;
+  --dark: #555;
 }
 
 * {
@@ -16,7 +17,7 @@
   min-height: 100vh;
   height: max-content;
   margin: auto;
-  overflow: auto;
+  padding-bottom: 1em;
 }
 
 nav {
@@ -27,8 +28,23 @@ nav {
   color: var(--bg);
   padding: 0.5em;
   font-size: 2em;
+  display: grid;
+  grid-template-columns: auto 2em;
 }
 
+.nav-btn-container {
+  text-align: right;
+}
+
+.nav-btn {
+  color: white;
+  transition: color 0.2s;
+}
+
+.nav-btn:hover {
+  cursor: pointer;
+  color: var(--dark);
+}
 
 #tasks-list {
   list-style-type: none;
@@ -57,4 +73,9 @@ nav {
 
 .add-task-btn:active {
   background-color: var(--leaf-very-light);
+}
+
+#add-task-btn {
+  position: sticky;
+  bottom: 1em;
 }
