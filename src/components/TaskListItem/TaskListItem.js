@@ -1,9 +1,26 @@
 import { faEllipsisV, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import "./TaskListItem.css";
 
 // Compontent for showing tasks as a list in app
 function TaskListItem(props) {
+  // Variable to control when to show the actions (if they are collapsed)
+  const [showActions, setShowActions] = useState(false);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", (e) => {
+      // console.log(e.target.parentNode.parentNode.className);
+      if (e.target.parentNode.className !== "actions-box") {
+        setShowActions(false);
+      }
+
+      return () => {
+        document.removeEventListener("mousedown");
+      };
+    });
+  });
+
   return (
     <li
       className={
@@ -19,7 +36,7 @@ function TaskListItem(props) {
       </div>
       <div className="task-actions">
         <i
-          id="delete-task-action"
+          className="delete-task-action"
           onClick={(e) => {
             e.stopPropagation();
             props.onDelete(props.task);
@@ -28,7 +45,7 @@ function TaskListItem(props) {
           <FontAwesomeIcon icon={faTrashAlt} />
         </i>
         <input
-          id="check-task-action"
+          className="check-task-action"
           type="checkbox"
           onClick={(e) => {
             e.stopPropagation();
@@ -37,11 +54,40 @@ function TaskListItem(props) {
           defaultChecked={props.task.completed}
         />
       </div>
-      <div className="task-actions-collapsed">
-        <i id="show-actions-btn">
+      {/* ! Removed */}
+      {/* <div className="task-actions-collapsed">
+        <i
+          className="show-actions-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowActions(!showActions);
+          }}
+        >
           <FontAwesomeIcon icon={faEllipsisV} />
         </i>
-      </div>
+        {showActions && (
+          <span className="actions-box">
+            <i
+              className="delete-task-action"
+              onClick={(e) => {
+                e.stopPropagation();
+                props.onDelete(props.task);
+              }}
+            >
+              <FontAwesomeIcon icon={faTrashAlt} />
+            </i>
+            <input
+              className="check-task-action"
+              type="checkbox"
+              onClick={(e) => {
+                e.stopPropagation();
+                props.onCheck(props.task.completed, props.task);
+              }}
+              defaultChecked={props.task.completed}
+            />
+          </span>
+        )}
+      </div> */}
     </li>
   );
 }
